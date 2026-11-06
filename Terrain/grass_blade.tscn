@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dw278xspqmy1e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb4up"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.48235294, 0.76862746, 0.49803922, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ob5bi"]
+material = SubResource("StandardMaterial3D_eb4up")
+size = Vector2(0.3, 0.6)
+
+[node name="GrassBlade" type="MeshInstance3D" unique_id=1477864408]
+mesh = SubResource("PlaneMesh_ob5bi")

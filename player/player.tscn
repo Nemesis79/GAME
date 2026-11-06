@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://b347ghfjpcted"]
+
+[ext_resource type="Script" uid="uid://c4rxg3pyponoe" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://l6t1wxh07i0u" path="res://player/crosshair.gd" id="2_rkbax"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gd1r4"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1805330340]
+script = ExtResource("1_oul6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=444965733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_gd1r4")
+
+[node name="Head" type="Node3D" parent="." unique_id=1916641557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=2003613751]
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=296437630]
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=564299937]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/HUD" unique_id=1125140123]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="Control" parent="CanvasLayer/HUD/CenterContainer" unique_id=938373171]
+layout_mode = 2
+script = ExtResource("2_rkbax")
