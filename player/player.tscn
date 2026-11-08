@@ -4,12 +4,14 @@
 [ext_resource type="Script" uid="uid://l6t1wxh07i0u" path="res://player/crosshair.gd" id="2_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gd1r4"]
+radius = 0.45
+height = 1.8
 
 [node name="Player" type="CharacterBody3D" unique_id=1805330340]
 script = ExtResource("1_oul6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=444965733]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_gd1r4")
 
 [node name="Head" type="Node3D" parent="." unique_id=1916641557]
@@ -52,3 +54,18 @@ grow_vertical = 2
 [node name="Crosshair" type="Control" parent="CanvasLayer/HUD/CenterContainer" unique_id=938373171]
 layout_mode = 2
 script = ExtResource("2_rkbax")
+
+[node name="StaminaBar" type="ProgressBar" parent="CanvasLayer/HUD" unique_id=1968893498]
+custom_minimum_size = Vector2(220, 12)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -27.0
+offset_right = 110.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
