@@ -1,4 +1,3 @@
-
 extends CharacterBody3D
 
 # ==================================================
@@ -6,7 +5,7 @@ extends CharacterBody3D
 # ==================================================
 @export_group("Movement")
 
-@export var walk_speed: float = 5.0
+@export var walk_speed: float = 4.5
 @export var sprint_speed: float = 8.0
 @export var crouch_speed: float = 2.5
 
@@ -20,7 +19,7 @@ extends CharacterBody3D
 # ==================================================
 @export_group("Jump")
 
-@export var jump_velocity: float = 5.0
+@export var jump_velocity: float = 4.5
 @export var coyote_time: float = 0.15
 @export var jump_buffer_time: float = 0.12
 
@@ -32,7 +31,6 @@ extends CharacterBody3D
 
 @export var max_stamina: float = 100.0
 @export var sprint_stamina_drain: float = 15.0
-@export var slide_stamina_drain: float = 20.0
 @export var stamina_regen: float = 20.0
 @export var stamina_recovery_delay: float = 1.0
 
@@ -263,13 +261,18 @@ func _update_timers(delta: float) -> void:
 func _apply_gravity(delta: float) -> void:
 
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= gravity * delta * 1.1
 
 
 # ==================================================
 # JUMP
 # ==================================================
 func _handle_jump() -> void:
+
+	# ถ้ากำลังสไลด์อยู่ แล้วกดกระโดด ให้ยกเลิกสไลด์ทันทีและพุ่งกระโดดขึ้นไป (Slide Cancel)
+	if is_sliding and (jump_buffer_timer > 0.0 and coyote_timer > 0.0):
+		is_sliding = false
+		slide_cooldown_timer = slide_cooldown
 
 	if is_sliding:
 		return
@@ -291,14 +294,11 @@ func _update_stamina(delta: float) -> void:
 		Input.is_action_pressed("sprint")
 		and stamina > 0.0
 		and is_on_floor()
-		and not Input.is_action_pressed("crouch")
 		and not is_sliding
 	)
-
+	
+	# ถ้าระหว่างสไลด์อยู่ จะไม่หัก stamina เพิ่มแม้จะกด shift ค้างไว้
 	if is_sliding:
-
-		stamina -= slide_stamina_drain * delta
-
 		stamina_recovery_timer = stamina_recovery_delay
 
 	elif is_sprinting:
@@ -326,10 +326,10 @@ func _update_stamina(delta: float) -> void:
 # ==================================================
 func _try_start_slide() -> void:
 
-	if not Input.is_action_just_pressed("crouch"):
+	if not Input.is_action_just_pressed("slide"):
 		return
 
-	if not Input.is_action_pressed("sprint"):
+	if not is_sprinting:
 		return
 
 	if not is_on_floor() or is_sliding:
@@ -361,13 +361,18 @@ func _try_start_slide() -> void:
 		slide_speed
 	)
 
-	# Prevent buffered jump after slide
 	jump_buffer_timer = 0.0
 
 	stamina_recovery_timer = stamina_recovery_delay
 
 
 func _handle_slide(delta: float) -> void:
+
+	# ถ้าระหว่างสไลด์แล้วผู้เล่นปล่อยปุ่ม C ให้ยกเลิกการสไลด์ทันที
+	if not Input.is_action_pressed("slide"):
+		is_sliding = false
+		slide_cooldown_timer = slide_cooldown
+		return
 
 	slide_timer -= delta
 
@@ -393,6 +398,9 @@ func _handle_slide(delta: float) -> void:
 # SPEED
 # ==================================================
 func _get_current_speed() -> float:
+
+	if is_sliding:
+		return slide_speed
 
 	if Input.is_action_pressed("crouch"):
 		return crouch_speed
@@ -472,7 +480,6 @@ func _can_stand() -> bool:
 
 	query.shape = stand_test_capsule
 
-	# Lift slightly to avoid detecting the floor
 	query.transform = global_transform * Transform3D(
 		Basis(),
 		Vector3(0.0, stand_collision_height * 0.5 + 0.02, 0.0)
@@ -495,7 +502,7 @@ func _can_stand() -> bool:
 func _handle_crouch(delta: float) -> void:
 
 	var wants_crouch := (
-		Input.is_action_pressed("crouch")
+		(Input.is_action_pressed("crouch") and not is_sliding)
 		or is_sliding
 	)
 
