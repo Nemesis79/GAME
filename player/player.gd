@@ -297,28 +297,38 @@ func _update_stamina(delta: float) -> void:
 		and not is_sliding
 	)
 	
-	# ถ้าระหว่างสไลด์อยู่ จะไม่หัก stamina เพิ่มแม้จะกด shift ค้างไว้
+	var is_using_stamina := false
+
 	if is_sliding:
 		stamina_recovery_timer = stamina_recovery_delay
+		# ถ้าระหว่างสไลด์แล้วยังกด shift ค้าง ถือว่าใช้งานสเตมิน่า (บาร์ต้องโชว์)
+		if Input.is_action_pressed("sprint"):
+			is_using_stamina = true
 
 	elif is_sprinting:
-
 		stamina -= sprint_stamina_drain * delta
-
 		stamina_recovery_timer = stamina_recovery_delay
+		is_using_stamina = true
 
 	else:
-
 		stamina_recovery_timer = maxf(
 			stamina_recovery_timer - delta,
 			0.0
 		)
 
 		if stamina_recovery_timer <= 0.0:
-			stamina += stamina_regen * delta
+			if stamina < max_stamina:
+				stamina += stamina_regen * delta
+				is_using_stamina = true # กำลังรีสเตมิน่า บาร์ต้องโชว์
 
 	stamina = clampf(stamina, 0.0, max_stamina)
 	stamina_bar.value = stamina
+
+	# ควบคุมการแสดงผลของ Stamina Bar (ถ้ามีการใช้งาน หรือกำลังรี หรือสเตมิน่ายังไม่เต็ม ให้แสดง / ถ้าเต็มและนิ่งให้ซ่อน)
+	if is_using_stamina or stamina < max_stamina:
+		stamina_bar.visible = true
+	else:
+		stamina_bar.visible = false
 
 
 # ==================================================
