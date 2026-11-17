@@ -94,7 +94,7 @@ var current_slide_speed: float = 0.0
 @export_group("Head Bob")
 
 @export var bob_frequency: float = 2.4
-@export var bob_amplitude: float = 0.045
+@export var bob_amplitude: float = 0.0
 @export var bob_smooth: float = 10.0
 
 
@@ -103,10 +103,10 @@ var current_slide_speed: float = 0.0
 # ==================================================
 @export_group("Camera Sway")
 
-@export var mouse_sway_amount: float = 0.0008
-@export var max_mouse_sway: float = 0.04
+@export var mouse_sway_amount: float = 0.0
+@export var max_mouse_sway: float = 0.0
 
-@export var movement_sway_amount: float = 0.025
+@export var movement_sway_amount: float = 0.0
 @export var sway_smooth: float = 5.0
 
 var mouse_sway: float = 0.0

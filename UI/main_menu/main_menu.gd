@@ -5,8 +5,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 func _on_playgame_pressed() -> void:
-	pass
-	get_tree().change_scene_to_file("res://world.tscn")
+	get_tree().change_scene_to_file("res://UI/loading/loading_screen.tscn")
 
 
 func _on_quit_pressed() -> void:

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://swvnlc3jsvyb"]
+
+[ext_resource type="Script" uid="uid://cqg5up8tt0e8g" path="res://UI/loading/loading_screen.gd" id="1_1j043"]
+
+[node name="LoadingScreen" type="Control" unique_id=2096703901]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1j043")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1533306158]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1545027968]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer" unique_id=1471800155]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/Content" unique_id=1248095042]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "Loading...."
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/Content" unique_id=811999768]
+custom_minimum_size = Vector2(360, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.7839839, 0.7839839, 0.78398377, 1)
+show_percentage = false

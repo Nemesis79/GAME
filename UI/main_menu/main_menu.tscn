@@ -58,7 +58,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.23529412, 1)
 theme_override_font_sizes/font_size = 21
-text = "Playgame"
+text = "Play game"
 flat = true
 
 [node name="Quit" type="Button" parent="VBoxContainer" unique_id=869746837]
