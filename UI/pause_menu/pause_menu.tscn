@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://se8qht13qq80"]
+
+[ext_resource type="Script" uid="uid://dbvd86bfotmal" path="res://UI/pause_menu/pause_menu.gd" id="1_bsi2c"]
+[ext_resource type="FontFile" uid="uid://bbbe1jb2xao82" path="res://UI/Font/Hoshiko Satsuki.ttf" id="2_2n0y6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mc6od"]
+line_spacing = 10.0
+font = ExtResource("2_2n0y6")
+font_size = 50
+font_color = Color(0.9196639, 0, 0.11842733, 1)
+outline_size = 13
+outline_color = Color(0.39952728, 0.059109114, 0.15602022, 1)
+
+[node name="pause_menu" type="Control" unique_id=880205427]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bsi2c")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=717384603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05490196, 0.05490196, 0.05490196, 0.34117648)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1324824473]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 23.275
+offset_top = -266.31702
+offset_right = 268.92993
+offset_bottom = 18.682983
+grow_vertical = 2
+scale = Vector2(1.405, 1.405)
+theme_override_constants/separation = 7
+
+[node name="name" type="Label" parent="VBoxContainer" unique_id=1224584515]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_2n0y6")
+theme_override_font_sizes/font_size = 16
+text = "GIN mahla"
+label_settings = SubResource("LabelSettings_mc6od")
+
+[node name="Spacer" type="Control" parent="VBoxContainer" unique_id=936176754]
+custom_minimum_size = Vector2(0, 82.24)
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="VBoxContainer" unique_id=521923792]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.23529412, 1)
+theme_override_font_sizes/font_size = 21
+text = "Resume"
+flat = true
+
+[node name="Main Menu" type="Button" parent="VBoxContainer" unique_id=2041155310]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.23529412, 1)
+theme_override_font_sizes/font_size = 21
+text = "Main menu"
+flat = true
+
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]
